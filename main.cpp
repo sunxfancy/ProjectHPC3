@@ -1,6 +1,7 @@
 #include <mpi.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define BLOCK_LOW(id, p, n) ((id) * (n) / (p))
 
@@ -17,8 +18,8 @@
 
 int main(int argc, char *argv[])
 {
-    int id, p, n, proc0_size;
-    long long low_value, high_value, size, prime, first, count;
+    int id, p, n, proc0_size, elapsed_time, global_count;
+    long long i, low_value, high_value, size, prime, first, count, index;
     char *marked;
 
     MPI_Init(&argc, &argv);
