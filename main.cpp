@@ -18,6 +18,10 @@
 
 int main(int argc, char *argv[])
 {
+    int id, p, n, proc0_size;
+    long long low_value, high_value, size, prime, first, count;
+    char *marked;
+
     MPI_Init(&argc, &argv);
     MPI_Barrier(MPI_COMM_WORLD);
     elapsed_time = -MPI_Wtime();
