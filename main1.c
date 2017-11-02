@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     if (!id)
     {
         printf("%d primes are less than or equal to %d\n",
-            global_count, n);
+            global_count+1, n);
         printf("Total elapsed time: %10.6f\n", elapsed_time);
     }
     MPI_Finalize();
