@@ -18,8 +18,8 @@
 
 int main(int argc, char *argv[])
 {
-    int id, p, n, proc0_size, elapsed_time, global_count;
-    long long i, low_value, high_value, size, prime, first, count, index;
+    int id, p, proc0_size, elapsed_time, global_count;
+    long long i, n, sqrtn, low_value, high_value, size, prime, first, count, index;
     char *marked;
 
     MPI_Init(&argc, &argv);
@@ -35,11 +35,12 @@ int main(int argc, char *argv[])
         exit(1);
     }
     n = atoi(argv[1]);
-    low_value = 2 + BLOCK_LOW(id, p, n - 1);
-    high_value = 2 + BLOCK_HIGH(id, p, n - 1);
+    low_value = 3 + BLOCK_LOW(id, p, n - 1);
+    high_value = 3 + BLOCK_HIGH(id, p, n - 1);
     size = BLOCK_SIZE(id, p, n - 1);
     proc0_size = (n - 1) / p;
-    if ((2 + proc0_size) < (int)sqrt((double)n))
+    sqrtn = (long long)sqrt((double)n);
+    if ((3 + proc0_size) < sqrtn)
     {
         if (!id)
             printf("Too many processes\n");
@@ -47,6 +48,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
     size = size / 2;
+    
     marked = (char *)malloc(size);
     if (marked == NULL)
     {
@@ -63,13 +65,13 @@ int main(int argc, char *argv[])
     do
     {
         if (prime * prime > low_value)
-            first = prime * prime - low_value;
+            first = (prime * prime - low_value) / 2;
         else
         {
             if (!(low_value % prime))
                 first = 0;
             else
-                first = prime - (low_value % prime) / 2;
+                first = (prime - low_value % prime) / 2;
         }
         for (i = first; i < size; i += prime)
             marked[i] = 1;
@@ -79,7 +81,7 @@ int main(int argc, char *argv[])
             prime = index*2 + 3;
         }
         MPI_Bcast(&prime, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    } while (prime * prime <= n);
+    } while (prime <= sqrtn);
 
     count = 0;
     for (i = 0; i < size; i++)
