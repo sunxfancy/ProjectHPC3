@@ -7,8 +7,8 @@ all: main main1
 
 .PHONY: run submit clean
 run:
-	./main  10000000000
-	./main1 10000000000
+	./main  1000000000
+	./main1 1000000000
 
 submit:
 	qsub jobfile
