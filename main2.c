@@ -18,7 +18,8 @@
 
 int main(int argc, char *argv[])
 {
-    int id, p, proc0_size, elapsed_time, global_count;
+    int id, p, proc0_size, global_count;
+    double elapsed_time;
     long long i, n, sqrtn, sqrtn2, low_value, high_value, size, prime, first, count, index;
     char *marked; char * lowprime;
 
