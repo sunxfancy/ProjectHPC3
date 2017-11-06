@@ -1,6 +1,6 @@
 CXXFLAGS := -g -O0
 
-all: main main1
+all: main main1 main2
 
 %: %.c
 	mpicc $(CXXFLAGS) $< -o $@ 
