@@ -9,9 +9,10 @@ all: main main1 main2
 run:
 	./main  100000000
 	./main1 100000000
+	./main2 100000000
 
 submit:
 	qsub jobfile
 
 clean:
-	rm -f XiaofanHPC3.* main main1
+	rm -f XiaofanHPC3.* main main1 main2
