@@ -18,9 +18,9 @@
 
 int main(int argc, char *argv[])
 {
-    int id, p, proc0_size, global_count;
+    int id, p;
     double elapsed_time;
-    long long i, n, sqrtn, sqrtn2, low_value, high_value, size, prime, first, count, index;
+    long long i, n, global_count, proc0_size, sqrtn, sqrtn2, low_value, high_value, size, prime, first, count, index;
     char *marked; char * lowprime;
 
     MPI_Init(&argc, &argv);
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
     elapsed_time += MPI_Wtime();
     if (!id)
     {
-        printf("%d primes are less than or equal to %d\n",
+        printf("%lld primes are less than or equal to %lld\n",
             global_count+1, n);
         printf("Total elapsed time: %10.6f\n", elapsed_time);
     }
