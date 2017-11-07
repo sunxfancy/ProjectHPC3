@@ -64,6 +64,13 @@ int main(int argc, char *argv[])
     index = 0;
     prime = 3;
     sqrtn2 = sqrtn / 2;
+    lowprime = (char *)malloc(sqrtn2);
+    if (lowprime == NULL)
+    {
+        printf("Cannot allocate enough memory\n");
+        MPI_Finalize();
+        exit(1);
+    }
     do
     {
         if (prime * prime > low_value)
