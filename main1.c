@@ -18,8 +18,9 @@
 
 int main(int argc, char *argv[])
 {
-    int id, p, proc0_size, elapsed_time, global_count;
-    long long i, n, sqrtn, low_value, high_value, size, prime, first, count, index;
+    int id, p;
+    double elapsed_time;
+    long long i, n, global_count, proc0_size, sqrtn, sqrtn2, low_value, high_value, size, prime, first, count, index;
     char *marked;
 
     MPI_Init(&argc, &argv);
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
         MPI_Finalize();
         exit(1);
     }
-    n = atoi(argv[1]);
+    n = atoll(argv[1]);
     low_value = 3 + BLOCK_LOW(id, p, n - 1);
     high_value = 3 + BLOCK_HIGH(id, p, n - 1);
     size = BLOCK_SIZE(id, p, n - 1);
@@ -92,7 +93,7 @@ int main(int argc, char *argv[])
     elapsed_time += MPI_Wtime();
     if (!id)
     {
-        printf("%d primes are less than or equal to %d\n",
+        printf("%lld primes are less than or equal to %lld\n",
             global_count+1, n);
         printf("Total elapsed time: %10.6f\n", elapsed_time);
     }
