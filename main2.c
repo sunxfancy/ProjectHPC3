@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
         MPI_Finalize();
         exit(1);
     }
-    n = atoi(argv[1]);
+    n = atoll(argv[1]);
     low_value = 3 + BLOCK_LOW(id, p, n - 1);
     high_value = 3 + BLOCK_HIGH(id, p, n - 1);
     size = BLOCK_SIZE(id, p, n - 1);
