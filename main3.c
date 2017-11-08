@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     {
         for (i = prime / 2; i < sqrtn2; i += prime)
             lowprime[i] = 1;
-        while (lowprime[++index])
+        while (lowprime[++index])   
             ;
         prime = index * 2 + 3;
         primes[++primes_count] = prime;
