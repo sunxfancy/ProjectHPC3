@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         MPI_Finalize();
         exit(1);
     }
-    primes = (long long *)malloc(sqrt2 * sizeof(long long));
+    primes = (long long *)malloc(sqrtn2 * sizeof(long long));
     primes_count = -1;
     do
     {
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     {
         for (k = 0; k < primes_count && primes[k] < block_size / 2; ++k)
         {
-            prime = primkes[k];
+            prime = primes[k];
             if (prime * prime > low_value + t * 2)
                 first = (prime * prime - low_value - t * 2) / 2;
             else
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
                 if (!((low_value + t * 2) % prime))
                     first = t;
                 else
-                    first = t + (prime - (low_value + t * 2) % e) / 2;
+                    first = t + (prime - (low_value + t * 2) % prime) / 2;
             }
             for (i = first; i < t + block_size; i += prime)
                 marked[i] = 1;
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
     block_size = size - t;
     for (k = 0; k < primes_count && primes[k] < block_size / 2; ++k)
     {
-        prime = primkes[k];
+        prime = primes[k];
         if (prime * prime > low_value + t * 2)
             first = (prime * prime - low_value - t * 2) / 2;
         else
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
             if (!((low_value + t * 2) % prime))
                 first = t;
             else
-                first = t + (prime - (low_value + t * 2) % e) / 2;
+                first = t + (prime - (low_value + t * 2) % prime) / 2;
         }
         for (i = first; i < t + block_size; i += prime)
             marked[i] = 1;
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 
     for (; k < primes_count; ++k)
     {
-        prime = primkes[k];
+        prime = primes[k];
         if (prime * prime > low_value + t * 2)
             first = (prime * prime - low_value - t * 2) / 2;
         else
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
             if (!((low_value + t * 2) % prime))
                 first = t;
             else
-                first = t + (prime - (low_value + t * 2) % e) / 2;
+                first = t + (prime - (low_value + t * 2) % prime) / 2;
         }
         for (i = first; i < t + block_size; i += prime)
             marked[i] = 1;
