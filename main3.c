@@ -64,7 +64,6 @@ int main(int argc, char *argv[])
     for (i = 0; i < size; i++)
         marked[i] = 0;
     // if (!id)
-    index = 0;
     prime = 3;
     sqrtn2 = sqrtn / 2;
     lowprime = (char *)malloc(sqrtn2);
@@ -80,6 +79,7 @@ int main(int argc, char *argv[])
     for (i = 0; i < sqrtn2; i++)
         primes[i] = 0;
     primes_count = -1;
+    index = -1;
     do
     {
         for (i = prime / 2 - 1; i < sqrtn2; i += prime)
