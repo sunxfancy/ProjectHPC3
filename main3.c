@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     primes_count = -1;
     do
     {
-        for (i = prime / 2; i < sqrtn2; i += prime)
+        for (i = prime / 2 - 1; i < sqrtn2; i += prime)
             lowprime[i] = 1;
         while (lowprime[++index])   
             ;
