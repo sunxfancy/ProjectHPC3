@@ -120,7 +120,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    block_size = size - t;
     for (k = 0; k < primes_count && primes[k] < block_size / 2; ++k)
     {
         prime = primes[k];
@@ -133,7 +132,7 @@ int main(int argc, char *argv[])
             else
                 first = t + (prime - (low_value + t * 2) % prime) / 2;
         }
-        for (i = first; i < t + block_size; i += prime)
+        for (i = first; i < size; i += prime)
             marked[i] = 1;
     }
 
