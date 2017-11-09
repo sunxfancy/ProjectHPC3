@@ -136,6 +136,12 @@ int main(int argc, char *argv[])
             marked[i] = 1;
     }
 
+    int pp;
+    for (pp = t; pp < size; pp++)
+        if (marked[pp] == 0)
+            printf("%lld ", pp*2+3);
+    printf("\n");
+
     for (; k < primes_count; ++k)
     {
         prime = primes[k];
@@ -151,11 +157,6 @@ int main(int argc, char *argv[])
         for (i = first; i < size; i += prime)
             marked[i] = 1;
     }
-
-    int pp;
-    for (pp = 200; pp < 1000; pp++)
-        if (marked[pp] == 0)
-            printf("%lld ", pp*2+3);
 
     count = 0;
     for (i = 0; i < size; i++)
