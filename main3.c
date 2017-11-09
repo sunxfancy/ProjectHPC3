@@ -85,11 +85,13 @@ int main(int argc, char *argv[])
         prime = index * 2 + 3;
         primes[++primes_count] = prime;
     } while (prime <= sqrtn);
+    for (int pp = 0; pp < 30; pp++)
+        printf("%lld ", primes[pp]);
 
     block_size = 50;
     int k;
     long long t;
-    for (t = 0; t < size - block_size; t += block_size)
+    for (t = 0; t < size - block_size; t += block_size) 
     {
         for (k = 0; k < primes_count && primes[k] < block_size / 2; ++k)
         {
