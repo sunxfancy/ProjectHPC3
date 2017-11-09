@@ -110,12 +110,13 @@ int main(int argc, char *argv[])
             for (i = first; i < t + block_size; i += prime)
                 marked[i] = 1;
         }
-        if (t == 3)
+        if (t == 3 * block_size)
         {
             int pp;
             for (pp = t; pp < t + block_size; pp++)
                 if (marked[pp] == 0)
                     printf("%lld ", pp*2+3);
+            printf("\n");
         }
     }
 
@@ -139,18 +140,23 @@ int main(int argc, char *argv[])
     for (; k < primes_count; ++k)
     {
         prime = primes[k];
-        if (prime * prime > low_value + t * 2)
-            first = (prime * prime - low_value - t * 2) / 2;
+        if (prime * prime > low_value)
+            first = (prime * prime - low_value) / 2;
         else
         {
-            if (!((low_value + t * 2) % prime))
-                first = t;
+            if (!((low_value) % prime))
+                first = 0;
             else
-                first = t + (prime - (low_value + t * 2) % prime) / 2;
+                first = (prime - (low_value) % prime) / 2;
         }
-        for (i = first; i < t + block_size; i += prime)
+        for (i = first; i < size; i += prime)
             marked[i] = 1;
     }
+
+    int pp;
+    for (pp = 200; pp < 1000; pp++)
+        if (marked[pp] == 0)
+            printf("%lld ", pp*2+3);
 
     count = 0;
     for (i = 0; i < size; i++)
