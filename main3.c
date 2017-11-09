@@ -68,6 +68,8 @@ int main(int argc, char *argv[])
     prime = 3;
     sqrtn2 = sqrtn / 2;
     lowprime = (char *)malloc(sqrtn2);
+    for (i = 0; i < sqrtn2; i++)
+        lowprime[i] = 0;
     if (lowprime == NULL)
     {
         printf("Cannot allocate enough memory\n");
@@ -75,6 +77,8 @@ int main(int argc, char *argv[])
         exit(1);
     }
     primes = (long long *)malloc(sqrtn2 * sizeof(long long));
+    for (i = 0; i < sqrtn2; i++)
+        primes[i] = 0;
     primes_count = -1;
     do
     {
