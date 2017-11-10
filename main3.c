@@ -65,8 +65,8 @@ int main(int argc, char *argv[])
         marked[i] = 0;
     // if (!id)
     sqrtn2 = sqrtn / 2;
-    lowprime = (char *)malloc(sqrtn2);
-    for (i = 0; i < sqrtn2; i++)
+    lowprime = (char *)malloc(sqrtn2+1);
+    for (i = 0; i <= sqrtn2; i++)
         lowprime[i] = 0;
     if (lowprime == NULL)
     {
@@ -77,19 +77,16 @@ int main(int argc, char *argv[])
     primes = (long long *)malloc(sqrtn2 * sizeof(long long));
     for (i = 0; i < sqrtn2; i++)
         primes[i] = 0;
-    prime = 3;
     primes_count = 0;
-    index = 0;
-    primes[0] = prime;
-    do
+    for (index = 0; index <= sqrtn2; ++index)
     {
-        for (i = (prime * 3 - 3) / 2; i < sqrtn2; i += prime)
-            lowprime[i] = 1;
-        while (lowprime[++index])
-            ;
-        prime = index * 2 + 3;
-        primes[++primes_count] = prime;
-    } while (prime <= sqrtn);
+        if (lowprime[index] == 0) {
+            prime = index * 2 + 3;
+            primes[primes_count++] = prime;
+            for (i = (prime * prime - 3) / 2; i <= sqrtn2; i += prime)
+                lowprime[i] = 1;
+        }
+    } 
     int tt;
     for (tt = 0; tt < 50; tt++)
         printf("%lld ", primes[tt]);
