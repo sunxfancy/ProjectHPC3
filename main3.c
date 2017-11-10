@@ -78,8 +78,9 @@ int main(int argc, char *argv[])
     for (i = 0; i < sqrtn2; i++)
         primes[i] = 0;
     prime = 3;
-    primes_count = -1;
-    index = -1;
+    primes_count = 0;
+    index = 0;
+    primes[0] = prime;
     do
     {
         for (i = (prime * 3 - 3) / 2; i < sqrtn2; i += prime)
@@ -87,9 +88,12 @@ int main(int argc, char *argv[])
         while (lowprime[++index])
             ;
         prime = index * 2 + 3;
-        primes[++primes_count] = prime;
+        primes[primes_count++] = prime;
     } while (prime <= sqrtn);
-
+    int pp;
+    for (pp = 0; pp < 50; pp++)
+        printf("%lld ", primes[pp]);
+    printf("\n");
     block_size = 50;
     int k;
     long long t;
