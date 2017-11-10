@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
     primes = (long long *)malloc(sqrtn2 * sizeof(long long));
-    for (i = 0; i < sqrtn2; i++)
+    for (i = 0; i <= sqrtn2; i++)
         primes[i] = 0;
     primes_count = 0;
     for (index = 0; index <= sqrtn2; ++index)
@@ -89,8 +89,9 @@ int main(int argc, char *argv[])
     }
     block_size = 100;
     int k;
-    long long t;
-    for (t = 0; t < size - block_size; t += block_size)
+    long long t, size1;
+    size1 = size / block_size * block_size; 
+    for (t = 0; t < size1; t += block_size)
     {
         for (k = 0; (k < primes_count) && (primes[k] < block_size / 2); ++k)
         {
