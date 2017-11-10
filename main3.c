@@ -90,9 +90,9 @@ int main(int argc, char *argv[])
         prime = index * 2 + 3;
         primes[primes_count++] = prime;
     } while (prime <= sqrtn);
-    int pp;
-    for (pp = 0; pp < 50; pp++)
-        printf("%lld ", primes[pp]);
+    int tt;
+    for (tt = 0; tt < 50; tt++)
+        printf("%lld ", primes[tt]);
     printf("\n");
     block_size = 50;
     int k;
