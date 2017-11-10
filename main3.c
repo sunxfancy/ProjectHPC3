@@ -87,6 +87,11 @@ int main(int argc, char *argv[])
                 lowprime[i] = 1;
         }
     }
+    int tt;
+    for (tt = primes_count-10; tt < primes_count; tt++)
+        printf("%lld ", primes[tt]);
+    printf("\n");
+
     block_size = 100;
     int k;
     long long t, size1;
@@ -117,22 +122,22 @@ int main(int argc, char *argv[])
             printf("\n");
         }
     }
-
-    for (k = 0; (k < primes_count) && (primes[k] < block_size / 2); ++k)
-    {
-        prime = primes[k];
-        if (prime * prime > low_value + t * 2)
-            first = (prime * prime - low_value - t * 2) / 2;
-        else
+    if (size1 != size)
+        for (k = 0; (k < primes_count) && (primes[k] < block_size / 2); ++k)
         {
-            if (!((low_value + t * 2) % prime))
-                first = t;
+            prime = primes[k];
+            if (prime * prime > low_value + t * 2)
+                first = (prime * prime - low_value - t * 2) / 2;
             else
-                first = t + (prime - (low_value + t * 2) % prime) / 2;
+            {
+                if (!((low_value + t * 2) % prime))
+                    first = t;
+                else
+                    first = t + (prime - (low_value + t * 2) % prime) / 2;
+            }
+            for (i = first; i < size; i += prime)
+                marked[i] = 1;
         }
-        for (i = first; i < size; i += prime)
-            marked[i] = 1;
-    }
 
     int pp;
     for (pp = t; pp < size; pp++)
