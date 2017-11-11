@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
         }
     }
     int tt;
-    for (tt = primes_count-10; tt < primes_count; tt++)
+    for (tt = 0; tt < 30; tt++)
         printf("%lld ", primes[tt]);
     printf("\n");
 
