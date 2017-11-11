@@ -16,6 +16,8 @@
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
+#define ISODD(x) ((x) & 1 == 1)
+
 int main(int argc, char *argv[])
 {
     int id, p;
@@ -102,13 +104,19 @@ int main(int argc, char *argv[])
         {
             prime = primes[k];
             if (prime * prime > low_value + t * 2)
-                first = (prime * prime - low_value - t * 2) / 2;
+                if (ISODD(prime * prime - low_value - t * 2))
+                    first = (prime * (prime+1) - low_value - t * 2) / 2;
+                else
+                    first = (prime * prime - low_value - t * 2) / 2;
             else
             {
                 if (!((low_value + t * 2) % prime))
                     first = t;
                 else
-                    first = t + (prime - (low_value + t * 2) % prime) / 2;
+                    if (ISODD(prime - (low_value + t * 2) % prime))
+                        first = t + (prime*2 - (low_value + t * 2) % prime) / 2;
+                    else
+                        first = t + (prime - (low_value + t * 2) % prime) / 2;
             }
             for (i = first; i < t + block_size; i += prime)
                 marked[i] = 1;
@@ -127,13 +135,19 @@ int main(int argc, char *argv[])
         {
             prime = primes[k];
             if (prime * prime > low_value + t * 2)
-                first = (prime * prime - low_value - t * 2) / 2;
+                if (ISODD(prime * prime - low_value - t * 2))
+                    first = (prime * (prime+1) - low_value - t * 2) / 2;
+                else
+                    first = (prime * prime - low_value - t * 2) / 2;
             else
             {
                 if (!((low_value + t * 2) % prime))
                     first = t;
                 else
-                    first = t + (prime - (low_value + t * 2) % prime) / 2;
+                    if (ISODD(prime - (low_value + t * 2) % prime))
+                        first = t + (prime*2 - (low_value + t * 2) % prime) / 2;
+                    else
+                        first = t + (prime - (low_value + t * 2) % prime) / 2;
             }
             for (i = first; i < size; i += prime)
                 marked[i] = 1;
