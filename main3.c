@@ -163,13 +163,19 @@ int main(int argc, char *argv[])
     {
         prime = primes[k];
         if (prime * prime > low_value)
-            first = (prime * prime - low_value) / 2;
+            if (ISODD(prime * prime - low_value))
+                first = (prime * (prime+1) - low_value) / 2;
+            else
+                first = (prime * prime - low_value) / 2;
         else
         {
             if (!((low_value) % prime))
                 first = 0;
             else
-                first = (prime - (low_value) % prime) / 2;
+                if (ISODD(prime - (low_value) % prime))
+                    first = (prime*2 - (low_value) % prime) / 2;
+                else
+                    first = (prime - (low_value) % prime) / 2;
         }
         for (i = first; i < size; i += prime)
             marked[i] = 1;
