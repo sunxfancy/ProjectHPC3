@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
         printf("%lld ", primes[tt]);
     printf("\n");
 
-    block_size = 100;
+    block_size = 150;
     int k;
     long long t, size1;
     size1 = size / block_size * block_size; 
