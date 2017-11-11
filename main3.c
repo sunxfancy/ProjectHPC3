@@ -104,60 +104,60 @@ int main(int argc, char *argv[])
         {
             prime = primes[k];
             if (prime * prime > low_value + t * 2)
-                if (ISODD(prime * prime - low_value - t * 2))
-                    first = (prime * (prime+1) - low_value - t * 2) / 2;
-                else
+                // if (ISODD(prime * prime - low_value - t * 2))
+                //     first = (prime * (prime+1) - low_value - t * 2) / 2;
+                // else
                     first = (prime * prime - low_value - t * 2) / 2;
             else
             {
                 if (!((low_value + t * 2) % prime))
                     first = t;
                 else
-                    if (ISODD(prime - (low_value + t * 2) % prime))
-                        first = t + (prime*2 - (low_value + t * 2) % prime) / 2;
-                    else
+                    // if (ISODD(prime - (low_value + t * 2) % prime))
+                    //     first = t + (prime*2 - (low_value + t * 2) % prime) / 2;
+                    // else
                         first = t + (prime - (low_value + t * 2) % prime) / 2;
             }
             for (i = first; i < t + block_size; i += prime)
                 marked[i] = 1;
         }
-        if (t == 0)
-        {
-            int pp;
-            for (pp = t; pp < t + block_size; pp++)
-                if (marked[pp] == 0)
-                    printf("%lld ", pp*2+3);
-            printf("\n");
-        }
+        // if (t == 0)
+        // {
+        //     int pp;
+        //     for (pp = t; pp < t + block_size; pp++)
+        //         if (marked[pp] == 0)
+        //             printf("%lld ", pp*2+3);
+        //     printf("\n");
+        // }
     }
     if (size1 != size)
         for (k = 0; (k < primes_count) && (primes[k] < block_size / 2); ++k)
         {
             prime = primes[k];
             if (prime * prime > low_value + t * 2)
-                if (ISODD(prime * prime - low_value - t * 2))
-                    first = (prime * (prime+1) - low_value - t * 2) / 2;
-                else
+                // if (ISODD(prime * prime - low_value - t * 2))
+                //     first = (prime * (prime+1) - low_value - t * 2) / 2;
+                // else
                     first = (prime * prime - low_value - t * 2) / 2;
             else
             {
                 if (!((low_value + t * 2) % prime))
                     first = t;
                 else
-                    if (ISODD(prime - (low_value + t * 2) % prime))
-                        first = t + (prime*2 - (low_value + t * 2) % prime) / 2;
-                    else
+                    // if (ISODD(prime - (low_value + t * 2) % prime))
+                    //     first = t + (prime*2 - (low_value + t * 2) % prime) / 2;
+                    // else
                         first = t + (prime - (low_value + t * 2) % prime) / 2;
             }
             for (i = first; i < size; i += prime)
                 marked[i] = 1;
         }
 
-    int pp;
-    for (pp = t; pp < size; pp++)
-        if (marked[pp] == 0)
-            printf("%lld ", pp*2+3);
-    printf("\n");
+    // int pp;
+    // for (pp = t; pp < size; pp++)
+    //     if (marked[pp] == 0)
+    //         printf("%lld ", pp*2+3);
+    // printf("\n");
 
     for (; k < primes_count; ++k)
     {
