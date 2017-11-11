@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
             for (i = first; i < t + block_size; i += prime)
                 marked[i] = 1;
         }
-        if (t == 3 * block_size)
+        if (t == 0)
         {
             int pp;
             for (pp = t; pp < t + block_size; pp++)
