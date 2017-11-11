@@ -41,9 +41,9 @@ int main(int argc, char *argv[])
         exit(1);
     }
     n = atoll(argv[1]);
-    low_value = 3 + BLOCK_LOW(id, p, n - 1);
-    high_value = 3 + BLOCK_HIGH(id, p, n - 1);
-    size = BLOCK_SIZE(id, p, n - 1);
+    low_value = 3 + 2*BLOCK_LOW(id, p, (n - 1)/2;
+    high_value = 3 + 2*BLOCK_HIGH(id, p, (n - 1))/2);
+    size = 2*BLOCK_SIZE(id, p, (n - 1)/2);
     proc0_size = (n - 1) / p;
     sqrtn = (long long)sqrt((double)n);
     if ((3 + proc0_size) < sqrtn)
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
         MPI_Finalize();
         exit(1);
     }
-    size = size / 2;
+    // size = size / 2;
 
     marked = (char *)malloc(size);
     if (marked == NULL)
