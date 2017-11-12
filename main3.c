@@ -125,10 +125,10 @@ int main(int argc, char *argv[])
     size1 = size / block_size * block_size;
     count = 0;
     for (i = 0; i < size1; i+=block_size) {
-        count += artitionSievePrimes(low_value+i, block_size, marked, primes, primes_count);
+        count += partitionSievePrimes(low_value+i, block_size, marked, primes, primes_count);
     }
     if (size1 != size)
-        count += artitionSievePrimes(low_value+i, size - size1, marked, primes, primes_count);
+        count += partitionSievePrimes(low_value+i, size - size1, marked, primes, primes_count);
    
     MPI_Reduce(&count, &global_count, 1, MPI_LONG_LONG, MPI_SUM,
                0, MPI_COMM_WORLD);
