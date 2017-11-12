@@ -88,9 +88,9 @@ int main(int argc, char *argv[])
     int id, p;
     double elapsed_time;
     long long i, n, global_count, proc0_size, sqrtn, low_value,
-        high_value, size, prime, first, count, index, block_size, primes_count;
+        high_value, size, size1, prime, first, count, index, block_size, primes_count;
     uint32_t *marked;
-    long long *primes;
+    uint64_t *primes;
 
     MPI_Init(&argc, &argv);
     MPI_Barrier(MPI_COMM_WORLD);
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    primes = (long long *)malloc((sqrtn >> 2) * sizeof(long long));
+    primes = malloc((sqrtn >> 2) * sizeof(uint64_t));
     primes_count = normalCalPrimes(primes, sqrtn);
 
     block_size = 2000000 * 8;
