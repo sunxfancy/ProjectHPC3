@@ -1,0 +1,16 @@
+#!/bin/sh
+#PBS -l nodes=8:ppn=32,walltime=01:00:00
+#PBS -N XiaofanHPC3-8
+#PBS -M xsun042@ucr.edu
+
+module purge
+module load gcc-4.7.2
+module load mvapich2-1.9/gcc-4.7.2
+
+JOB_PATH=/home/xsun042/ProjectHPC3/
+cd $JOB_PATH
+
+mpirun -n 8 -ppn 32 ./main  10000000000
+mpirun -n 8 -ppn 32 ./main1 10000000000
+mpirun -n 8 -ppn 32 ./main2 10000000000
+mpirun -n 8 -ppn 32 ./main3 10000000000
