@@ -109,8 +109,8 @@ int main(int argc, char *argv[])
     high_value = BLOCK_HIGH(id, p, (n - 1)/2);
     size = BLOCK_SIZE(id, p, (n - 1)/2);
     sqrtn = (long long)sqrt((double)n);
-    
-    marked = malloc(sizeof(uint32_t) * (1 + ((n * 150) >> 5)));
+
+    marked = malloc(sizeof(uint32_t) * (1 + (size >> 5)));
     if (marked == NULL)
     {
         printf("Cannot allocate enough memory\n");
