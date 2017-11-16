@@ -15,6 +15,7 @@
         ( ( ((p)*(index)+1)-1 ) / (n)
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define ISODD(x) (((x)&1) == 1)
 
 int main(int argc, char *argv[])
 {
@@ -71,6 +72,8 @@ int main(int argc, char *argv[])
         {
             if (!(low_value % prime))
                 first = 0;
+            else if (ODD(prime - low_value % prime))
+                first = (prime*2 - low_value % prime) / 2;
             else
                 first = (prime - low_value % prime) / 2;
         }
