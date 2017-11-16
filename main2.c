@@ -15,6 +15,7 @@
         ( ( ((p)*(index)+1)-1 ) / (n)
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define ISODD(x) (((x)&1) == 1)
 
 int main(int argc, char *argv[])
 {
@@ -79,6 +80,8 @@ int main(int argc, char *argv[])
         {
             if (!(low_value % prime))
                 first = 0;
+            else if (ISODD(prime - low_value % prime))
+                first = (prime*2 - low_value % prime) / 2;
             else
                 first = (prime - low_value % prime) / 2;
         }
@@ -89,7 +92,7 @@ int main(int argc, char *argv[])
             while (marked[++index]);
             prime = index*2 + 3;
         } else {
-            for (i = prime / 2; i < sqrtn2; i += prime)
+            for (i = (prime * prime - 3) / 2; i < sqrtn2; i += prime)
                 lowprime[i] = 1;
             while (lowprime[++index]);
             prime = index*2 + 3;

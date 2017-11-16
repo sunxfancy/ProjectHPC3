@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
         {
             if (!(low_value % prime))
                 first = 0;
-            else if (ODD(prime - low_value % prime))
+            else if (ISODD(prime - low_value % prime))
                 first = (prime*2 - low_value % prime) / 2;
             else
                 first = (prime - low_value % prime) / 2;
