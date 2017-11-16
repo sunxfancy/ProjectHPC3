@@ -1,0 +1,12 @@
+mpicc -g -O0 main.c -o main 
+mpicc -g -O0 main1.c -o main1 
+mpicc -g -O0 main2.c -o main2 
+mpicc -g -O0 main3.c -o main3 
+455052511 primes are less than or equal to 10000000000
+Total elapsed time:  33.522081
+455052511 primes are less than or equal to 10000000000
+Total elapsed time:  16.038441
+455052511 primes are less than or equal to 10000000000
+Total elapsed time:  16.253208
+455052511 primes are less than or equal to 10000000000
+Total elapsed time:   7.487676
