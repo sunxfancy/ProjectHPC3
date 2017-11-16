@@ -72,6 +72,9 @@ int main(int argc, char *argv[])
         MPI_Finalize();
         exit(1);
     }
+    for (i = 0; i < sqrtn2; i++)
+        lowprime[i] = 0;
+
     do
     {
         if (prime * prime > low_value)
