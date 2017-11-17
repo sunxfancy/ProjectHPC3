@@ -1,4 +1,4 @@
-CXXFLAGS := -g -O0
+CXXFLAGS := -O3 -Wall -DNDEBUG
 
 all: main main1 main2 main3
 
@@ -7,8 +7,11 @@ all: main main1 main2 main3
 
 .PHONY: submit clean
 
-submit:
+submit: all
 	qsub jobfile
+	qsub jobfile2
+	qsub jobfile4
+	qsub jobfile8
 
 clean:
 	rm -f XiaofanHPC3* main main1 main2 main3
