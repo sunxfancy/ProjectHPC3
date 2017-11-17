@@ -3,10 +3,10 @@ mpicc -g -O0 main1.c -o main1
 mpicc -g -O0 main2.c -o main2 
 mpicc -g -O0 main3.c -o main3 
 455052511 primes are less than or equal to 10000000000
-Total elapsed time:  33.522081
+Total elapsed time:  33.672447
 455052511 primes are less than or equal to 10000000000
-Total elapsed time:  16.038441
+Total elapsed time:  16.179223
 455052511 primes are less than or equal to 10000000000
-Total elapsed time:  16.253208
+Total elapsed time:  15.725824
 455052511 primes are less than or equal to 10000000000
-Total elapsed time:   7.487676
+Total elapsed time:   7.310249
