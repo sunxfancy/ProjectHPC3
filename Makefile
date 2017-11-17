@@ -7,7 +7,7 @@ all: main main1 main2 main3
 
 .PHONY: submit clean
 
-submit: all
+submit:
 	qsub jobfile
 	qsub jobfile2
 	qsub jobfile4
