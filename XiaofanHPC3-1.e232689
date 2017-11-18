@@ -1,0 +1,15 @@
+main.c: In function 'main':
+main.c:23:73: warning: variable 'high_value' set but not used [-Wunused-but-set-variable]
+main.c:23:54: warning: unused variable 'sqrtn2' [-Wunused-variable]
+main.c:23:47: warning: unused variable 'sqrtn' [-Wunused-variable]
+main1.c: In function 'main':
+main1.c:24:73: warning: variable 'high_value' set but not used [-Wunused-but-set-variable]
+main1.c:24:54: warning: unused variable 'sqrtn2' [-Wunused-variable]
+main2.c: In function 'main':
+main2.c:24:73: warning: variable 'high_value' set but not used [-Wunused-but-set-variable]
+main3.c: In function 'main':
+main3.c:91:55: warning: unused variable 'index' [-Wunused-variable]
+main3.c:91:41: warning: unused variable 'first' [-Wunused-variable]
+main3.c:91:34: warning: unused variable 'prime' [-Wunused-variable]
+main3.c:91:9: warning: variable 'high_value' set but not used [-Wunused-but-set-variable]
+main3.c:90:35: warning: unused variable 'proc0_size' [-Wunused-variable]
