@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #define BLOCK_LOW(id, p, n) ((id) * (n) / (p))
 
@@ -16,15 +17,80 @@
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
+#define setBit(Array, offset) Array[(offset) >> 5] |= (1 << ((offset)&0x1F))
+#define getBit(Array, offset) ((Array[(offset) >> 5] & (1 << ((offset)&0x1F))) != 0)
+#define ISODD(x) (((x) & 1) == 1)
+
+uint64_t normalCalPrimes(uint64_t primes[], const uint64_t n)
+{
+	uint64_t prime, i, j, primes_count;
+    uint32_t *lowprime;
+    lowprime = malloc(sizeof(uint32_t) * (1 + (n >> 6)));
+    if (lowprime == NULL)
+    {
+        fprintf(stderr,"Cannot allocate enough memory\n");
+        MPI_Finalize();
+        exit(1);
+    }
+	primes_count = 0;
+	for (i = 0; i < (n >> 6); ++i)
+		lowprime[i] = 0;
+	primes[0] = 2;
+	for (i = 0; i < n / 2; ++i)
+	{
+		if (!getBit(lowprime, i))
+		{
+			prime = i * 2 + 3;
+			primes[++primes_count] = prime;
+			for (j = (prime * prime - 3) / 2; j <= n / 2; j += prime)
+				setBit(lowprime, j);
+		}
+	}
+	free(lowprime);
+	return primes_count + 1;
+}
+
+
+uint64_t partitionSievePrimes(const uint64_t start, const uint64_t size, uint32_t mark[], const uint64_t lowprimes[], const uint64_t primes_count)
+{
+    uint64_t i, j, prime, first, firstnum, count;
+    count = 0;
+	firstnum = start * 2 + 3;
+	for (i = 0; i <= size >> 5; ++i) mark[i] = 0;
+	for (i = 1; (i < primes_count); ++i)
+	{
+		prime = lowprimes[i];
+		if ( (prime * prime - 3) / 2 > start) {
+			first = (prime * prime - 3) / 2 - start;
+			if (first >= size) break;
+		} else {
+			if (firstnum % prime == 0) 
+				first = 0;
+			else {
+				if (ISODD(prime - (firstnum % prime)))
+					first = (prime*2 - (firstnum % prime)) / 2;
+				else
+					first = (prime - (firstnum % prime)) / 2;
+			}
+		}
+		for (j = first; j < size; j += prime)
+			setBit(mark, j);
+	}
+	for (i = 0; i < size; ++i)
+		if (!getBit(mark, i)) ++count;
+	return count;
+}
+
+
+
 int main(int argc, char *argv[])
 {
     int id, p;
     double elapsed_time;
-    long long i, n, global_count, proc0_size, sqrtn, sqrtn2, low_value,
-        high_value, size, prime, first, count, index, block_size, primes_count;
-    char *marked;
-    char *lowprime;
-    long long *primes;
+    long long i, n, global_count, proc0_size, sqrtn, low_value,
+        high_value, size, size1, prime, first, count, index, block_size, primes_count;
+    uint32_t *marked;
+    uint64_t *primes;
 
     MPI_Init(&argc, &argv);
     MPI_Barrier(MPI_COMM_WORLD);
@@ -39,21 +105,12 @@ int main(int argc, char *argv[])
         exit(1);
     }
     n = atoll(argv[1]);
-    low_value = 3 + BLOCK_LOW(id, p, n - 1);
-    high_value = 3 + BLOCK_HIGH(id, p, n - 1);
-    size = BLOCK_SIZE(id, p, n - 1);
-    proc0_size = (n - 1) / p;
+    low_value = BLOCK_LOW(id, p, (n - 1)/2);
+    high_value = BLOCK_HIGH(id, p, (n - 1)/2);
+    size = BLOCK_SIZE(id, p, (n - 1)/2);
     sqrtn = (long long)sqrt((double)n);
-    if ((3 + proc0_size) < sqrtn)
-    {
-        if (!id)
-            printf("Too many processes\n");
-        MPI_Finalize();
-        exit(1);
-    }
-    size = size / 2;
 
-    marked = (char *)malloc(size);
+    marked = malloc(sizeof(uint32_t) * (1 + (size >> 5)));
     if (marked == NULL)
     {
         printf("Cannot allocate enough memory\n");
@@ -61,111 +118,18 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    for (i = 0; i < size; i++)
-        marked[i] = 0;
-    // if (!id)
-    sqrtn2 = sqrtn / 2;
-    lowprime = (char *)malloc(sqrtn2);
-    for (i = 0; i < sqrtn2; i++)
-        lowprime[i] = 0;
-    if (lowprime == NULL)
-    {
-        printf("Cannot allocate enough memory\n");
-        MPI_Finalize();
-        exit(1);
-    }
-    primes = (long long *)malloc(sqrtn2 * sizeof(long long));
-    for (i = 0; i < sqrtn2; i++)
-        primes[i] = 0;
-    prime = 3;
-    primes_count = 0;
-    index = 0;
-    primes[0] = prime;
-    do
-    {
-        for (i = (prime * 3 - 3) / 2; i < sqrtn2; i += prime)
-            lowprime[i] = 1;
-        while (lowprime[++index])
-            ;
-        prime = index * 2 + 3;
-        primes[primes_count++] = prime;
-    } while (prime <= sqrtn);
-    int pp;
-    for (pp = 0; pp < 50; pp++)
-        printf("%lld ", primes[pp]);
-    printf("\n");
-    block_size = 50;
-    int k;
-    long long t;
-    for (t = 0; t < size - block_size; t += block_size)
-    {
-        for (k = 0; k < primes_count && primes[k] < block_size / 2; ++k)
-        {
-            prime = primes[k];
-            if (prime * prime > low_value + t * 2)
-                first = (prime * prime - low_value - t * 2) / 2;
-            else
-            {
-                if (!((low_value + t * 2) % prime))
-                    first = t;
-                else
-                    first = t + (prime - (low_value + t * 2) % prime) / 2;
-            }
-            for (i = first; i < t + block_size; i += prime)
-                marked[i] = 1;
-        }
-        if (t == 3 * block_size)
-        {
-            int pp;
-            for (pp = t; pp < t + block_size; pp++)
-                if (marked[pp] == 0)
-                    printf("%lld ", pp*2+3);
-            printf("\n");
-        }
-    }
+    primes = malloc((sqrtn >> 2) * sizeof(uint64_t));
+    primes_count = normalCalPrimes(primes, sqrtn);
 
-    for (k = 0; k < primes_count && primes[k] < block_size / 2; ++k)
-    {
-        prime = primes[k];
-        if (prime * prime > low_value + t * 2)
-            first = (prime * prime - low_value - t * 2) / 2;
-        else
-        {
-            if (!((low_value + t * 2) % prime))
-                first = t;
-            else
-                first = t + (prime - (low_value + t * 2) % prime) / 2;
-        }
-        for (i = first; i < size; i += prime)
-            marked[i] = 1;
-    }
-
-    int pp;
-    for (pp = t; pp < size; pp++)
-        if (marked[pp] == 0)
-            printf("%lld ", pp*2+3);
-    printf("\n");
-
-    for (; k < primes_count; ++k)
-    {
-        prime = primes[k];
-        if (prime * prime > low_value)
-            first = (prime * prime - low_value) / 2;
-        else
-        {
-            if (!((low_value) % prime))
-                first = 0;
-            else
-                first = (prime - (low_value) % prime) / 2;
-        }
-        for (i = first; i < size; i += prime)
-            marked[i] = 1;
-    }
-
+    block_size = 2000000 * 8;
+    size1 = size / block_size * block_size;
     count = 0;
-    for (i = 0; i < size; i++)
-        if (!marked[i])
-            count++;
+    for (i = 0; i < size1; i+=block_size) {
+        count += partitionSievePrimes(low_value+i, block_size, marked, primes, primes_count);
+    }
+    if (size1 != size)
+        count += partitionSievePrimes(low_value+i, size - size1, marked, primes, primes_count);
+   
     MPI_Reduce(&count, &global_count, 1, MPI_LONG_LONG, MPI_SUM,
                0, MPI_COMM_WORLD);
     elapsed_time += MPI_Wtime();

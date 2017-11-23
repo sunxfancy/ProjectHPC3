@@ -1,7 +1,6 @@
 #!/bin/sh
-
-#PBS -l nodes=4:ppn=32,walltime=01:00:00
-#PBS -N XiaofanHPC3
+#PBS -l nodes=1:ppn=32,walltime=00:02:00
+#PBS -N XiaofanHPC3-1
 #PBS -M xsun042@ucr.edu
 
 module purge
@@ -11,4 +10,8 @@ module load mvapich2-1.9/gcc-4.7.2
 JOB_PATH=/home/xsun042/ProjectHPC3/
 cd $JOB_PATH
 make
-make run
+
+mpirun -n 32 -ppn 32 ./main  10000000000
+mpirun -n 32 -ppn 32 ./main1 10000000000
+mpirun -n 32 -ppn 32 ./main2 10000000000
+mpirun -n 32 -ppn 32 ./main3 10000000000

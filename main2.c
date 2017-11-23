@@ -15,6 +15,7 @@
         ( ( ((p)*(index)+1)-1 ) / (n)
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define ISODD(x) (((x)&1) == 1)
 
 int main(int argc, char *argv[])
 {
@@ -36,9 +37,9 @@ int main(int argc, char *argv[])
         exit(1);
     }
     n = atoll(argv[1]);
-    low_value = 3 + BLOCK_LOW(id, p, n - 1);
-    high_value = 3 + BLOCK_HIGH(id, p, n - 1);
-    size = BLOCK_SIZE(id, p, n - 1);
+    low_value = 3 + 2*BLOCK_LOW(id, p, (n - 1)/2);
+    high_value = 3 + 2*BLOCK_HIGH(id, p, (n - 1)/2);
+    size = 2*BLOCK_SIZE(id, p, (n - 1)/2);
     proc0_size = (n - 1) / p;
     sqrtn = (long long)sqrt((double)n);
     if ((3 + proc0_size) < sqrtn)
@@ -71,6 +72,9 @@ int main(int argc, char *argv[])
         MPI_Finalize();
         exit(1);
     }
+    for (i = 0; i < sqrtn2; i++)
+        lowprime[i] = 0;
+
     do
     {
         if (prime * prime > low_value)
@@ -79,6 +83,8 @@ int main(int argc, char *argv[])
         {
             if (!(low_value % prime))
                 first = 0;
+            else if (ISODD(prime - low_value % prime))
+                first = (prime*2 - low_value % prime) / 2;
             else
                 first = (prime - low_value % prime) / 2;
         }
@@ -89,7 +95,7 @@ int main(int argc, char *argv[])
             while (marked[++index]);
             prime = index*2 + 3;
         } else {
-            for (i = prime / 2; i < sqrtn2; i += prime)
+            for (i = (prime * prime - 3) / 2; i < sqrtn2; i += prime)
                 lowprime[i] = 1;
             while (lowprime[++index]);
             prime = index*2 + 3;
