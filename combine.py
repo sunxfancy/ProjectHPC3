@@ -13,12 +13,12 @@ def readForm(file, line):
 
 def printPart(title, pos, f):
     print(title)
-    for i in xrange(1, 5):
+    for i in xrange(1, 4):
         print(f[i][pos])
 
 def main():
     f = []
-    for i in xrange(1,5):
+    for i in xrange(1, 4):
         f.append(readAll(sys.argv[i]))
     printPart('Original', 0, f)
     printPart('Part1', 1, f)
