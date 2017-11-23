@@ -8,9 +8,7 @@ compile: main main1 main2 main3
 	mpicc $(CXXFLAGS) $< -o $@ 
 
 load:
-	module purge
-	module load gcc-4.7.2
-	module load mvapich2-1.9/gcc-4.7.2
+	sh load_env.sh
 
 submit: 
 	qsub jobfile
