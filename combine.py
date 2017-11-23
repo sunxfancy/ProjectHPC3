@@ -7,7 +7,6 @@ def readAll(file):
     with open(file) as f:
         return f.readlines()
 
-
 def readFrom(file, line):
     with open(file) as f:
         return f.readlines()[line:]
@@ -19,8 +18,8 @@ def printPart(title, pos, f):
 
 def main():
     f = []
-    f.append(readFrom(sys.argv[1], 4))
-    for i in xrange(2, 5):
+    f.append(readFrom(sys.argv[0], 4))
+    for i in xrange(1, 4):
         f.append(readAll(sys.argv[i]))
     printPart('Original:', 0, f)
     printPart('Part1:', 1, f)
