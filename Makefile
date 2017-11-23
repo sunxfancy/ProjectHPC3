@@ -7,9 +7,6 @@ compile: main main1 main2 main3
 %: %.c
 	mpicc $(CXXFLAGS) $< -o $@ 
 
-load:
-	sh load_env.sh
-
 submit: 
 	qsub jobfile
 	qsub jobfile2
