@@ -6,6 +6,6 @@ all: main main1 main2 main3
 	mpicc $(CXXFLAGS) $< -o $@ 
 
 clean:
-	rm -f XiaofanHPC3* main main1 main2 main3
+	rm -f XiaofanHPC3* main main1 main2 main3 result
 
 .PHONY: clean
