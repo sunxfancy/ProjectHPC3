@@ -13,7 +13,7 @@ def readForm(file, line):
 
 def printPart(title, pos, f):
     print(title)
-    for i in xrange(1, 4):
+    for i in xrange(0, 3):
         print(f[i][pos])
 
 def main():
