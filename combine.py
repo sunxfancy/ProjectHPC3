@@ -20,7 +20,7 @@ def main():
     f = []
     print(sys.argv)
     f.append(readFrom(sys.argv[1], 4))
-    for i in xrange(2, 4):
+    for i in xrange(2, 5):
         f.append(readAll(sys.argv[i]))
     printPart('Original:', 0, f)
     printPart('Part1:', 1, f)
