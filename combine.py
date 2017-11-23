@@ -18,7 +18,6 @@ def printPart(title, pos, f):
 
 def main():
     f = []
-    print(sys.argv)
     f.append(readFrom(sys.argv[1], 4))
     for i in xrange(2, 5):
         f.append(readAll(sys.argv[i]))
