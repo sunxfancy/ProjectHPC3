@@ -15,17 +15,17 @@ def readFrom(file, line):
 def printPart(title, pos, f):
     print(title)
     for i in xrange(0, 4):
-        print(f[i][pos], end='')
+        sys.stdout.write(f[i][pos])
 
 def main():
     f = []
     f.append(readFrom(sys.argv[1], 4))
     for i in xrange(2, 5):
         f.append(readAll(sys.argv[i]))
-    printPart('Original', 0, f)
-    printPart('Part1', 1, f)
-    printPart('Part2', 2, f)
-    printPart('Part3', 3, f)
+    printPart('Original:', 0, f)
+    printPart('Part1:', 1, f)
+    printPart('Part2:', 2, f)
+    printPart('Part3:', 3, f)
 
 if __name__ == '__main__':
     main()
