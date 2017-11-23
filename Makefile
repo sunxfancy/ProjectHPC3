@@ -1,13 +1,18 @@
 CXXFLAGS := -O3 -Wall -DNDEBUG
 
-all: main main1 main2 main3
+all: load compile submit
+
+compile: main main1 main2 main3
 
 %: %.c
 	mpicc $(CXXFLAGS) $< -o $@ 
 
-.PHONY: submit clean
+load:
+	module purge
+	module load gcc-4.7.2
+	module load mvapich2-1.9/gcc-4.7.2
 
-submit:
+submit: 
 	qsub jobfile
 	qsub jobfile2
 	qsub jobfile4
@@ -15,3 +20,5 @@ submit:
 
 clean:
 	rm -f XiaofanHPC3* main main1 main2 main3
+
+.PHONY: submit clean load compile all

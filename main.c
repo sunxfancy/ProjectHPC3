@@ -92,9 +92,7 @@ int main(int argc, char *argv[])
     elapsed_time += MPI_Wtime();
     if (!id)
     {
-        printf("%lld primes are less than or equal to %lld\n",
-            global_count, n);
-        printf("Total elapsed time: %10.6f\n", elapsed_time);
+        printf("The total number of prime: %lld, total time: %.6f, total node %d\n", global_count, elapsed_time, p/32);
     }
     MPI_Finalize();
     return 0;
