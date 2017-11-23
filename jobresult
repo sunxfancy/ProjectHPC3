@@ -1,0 +1,4 @@
+#!/bin/sh
+#PBS -l nodes=1:ppn=32,walltime=00:02:00
+#PBS -N XiaofanHPC3-result
+#PBS -M xsun042@ucr.edu
